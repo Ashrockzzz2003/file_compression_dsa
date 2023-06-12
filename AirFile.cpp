@@ -1,7 +1,7 @@
-#include "huffman.hpp"
+#include "AirFile.hpp"
 #include <iostream>
 
-void huffman::createArr() {
+void AirFile::createArr() {
     for (int i = 0; i < 128; i++) {
         arr.push_back(new Node());
         arr[i]->data = i;
@@ -9,7 +9,7 @@ void huffman::createArr() {
     }
 }
 
-void huffman::traverse(Node* r, string str) {
+void AirFile::traverse(Node* r, string str) {
     if (r->left == NULL && r->right == NULL) {
         r->code = str;
         return;
@@ -19,7 +19,7 @@ void huffman::traverse(Node* r, string str) {
     traverse(r->right, str + '1');
 }
 
-int huffman::binToDec(string inStr) {
+int AirFile::binToDec(string inStr) {
     int res = 0;
     for (auto c : inStr) {
         res = res * 2 + c - '0';
@@ -27,7 +27,7 @@ int huffman::binToDec(string inStr) {
     return res;
 }
 
-string huffman::decToBin(int inNum) {
+string AirFile::decToBin(int inNum) {
     string temp = "", res = "";
     while (inNum > 0) {
         temp += (inNum % 2 + '0');
@@ -40,7 +40,7 @@ string huffman::decToBin(int inNum) {
     return res;
 }
 
-void huffman::buildTree(char a_code, string& path) {
+void AirFile::buildTree(char a_code, string& path) {
     Node* curr = root;
     for (int i = 0; i < path.length(); i++) {
         if (path[i] == '0') {
@@ -59,7 +59,7 @@ void huffman::buildTree(char a_code, string& path) {
     curr->data = a_code;
 }
 
-void huffman::createMinHeap() {
+void AirFile::createMinHeap() {
     char id;
     inFile.open(inFileName, ios::in);
     inFile.get(id);
@@ -77,8 +77,8 @@ void huffman::createMinHeap() {
     }
 }
 
-void huffman::createTree() {
-    //Creating Huffman Tree with the Min Heap created earlier
+void AirFile::createTree() {
+    //Creating AirFile Tree with the Min Heap created earlier
     Node *left, *right;
     priority_queue <Node*, vector<Node*>, Compare> tempPQ(minHeap);
     while (tempPQ.size() != 1)
@@ -98,12 +98,12 @@ void huffman::createTree() {
     }
 }
 
-void huffman::createCodes() {
-    //Traversing the Huffman Tree and assigning specific codes to each character
+void AirFile::createCodes() {
+    //Traversing the AirFile Tree and assigning specific codes to each character
     traverse(root, "");
 }
 
-void huffman::saveEncodedFile() {
+void AirFile::saveEncodedFile() {
     //Saving encoded (.huf) file
     inFile.open(inFileName, ios::in);
     outFile.open(outFileName, ios::out | ios::binary);
@@ -111,7 +111,7 @@ void huffman::saveEncodedFile() {
     string s = "";
     char id;
 
-    //Saving the meta data (huffman tree)
+    //Saving the meta data (AirFile tree)
     in += (char)minHeap.size();
     priority_queue <Node*, vector<Node*>, Compare> tempPQ(minHeap);
     while (!tempPQ.empty()) {
@@ -158,7 +158,7 @@ void huffman::saveEncodedFile() {
 	outFile.close();
 }
 
-void huffman::saveDecodedFile() {
+void AirFile::saveDecodedFile() {
     inFile.open(inFileName, ios::in | ios::binary);
     outFile.open(outFileName, ios::out);
     unsigned char size;
@@ -167,7 +167,7 @@ void huffman::saveDecodedFile() {
     inFile.seekg(-1, ios::end);
     char count0;
     inFile.read(&count0, 1);
-    //Ignoring the meta data (huffman tree) (1 + 17 * size) and reading remaining file
+    //Ignoring the meta data (AirFile tree) (1 + 17 * size) and reading remaining file
     inFile.seekg(1 + 17 * size, ios::beg);
 
     vector<unsigned char> text;
@@ -186,7 +186,7 @@ void huffman::saveDecodedFile() {
         if (i == text.size() - 2) {
             path = path.substr(0, 8 - count0);
         }
-        //Traversing huffman tree and appending resultant data to the file
+        //Traversing AirFile tree and appending resultant data to the file
         for (int j = 0; j < path.size(); j++) {
             if (path[j] == '0') {
                 curr = curr->left;
@@ -205,7 +205,7 @@ void huffman::saveDecodedFile() {
     outFile.close();
 }
 
-void huffman::getTree() {
+void AirFile::getTree() {
     inFile.open(inFileName, ios::in | ios::binary);
     //Reading size of MinHeap
     unsigned char size;
@@ -228,20 +228,20 @@ void huffman::getTree() {
             j++;
         }
         hCodeStr = hCodeStr.substr(j+1);
-        //Adding node with aCode data and hCodeStr string to the huffman tree
+        //Adding node with aCode data and hCodeStr string to the AirFile tree
         buildTree(aCode, hCodeStr);
     }
     inFile.close();
 }
 
-void huffman::compress() {
+void AirFile::compress() {
     createMinHeap();
     createTree();
     createCodes();
     saveEncodedFile();
 }
 
-void huffman::decompress() {
+void AirFile::decompress() {
     getTree();
     saveDecodedFile();
 }

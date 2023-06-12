@@ -1,13 +1,13 @@
  //Header Guards to prevent header files from being included multiple times
-#ifndef HUFFMAN_HPP
-#define HUFFMAN_HPP
+#ifndef AIRFILE_HPP
+#define AIRFILE_HPP
 #include <string>
 #include <vector>
 #include <queue>
 #include <fstream>
 using namespace std;
 
-//Defining Huffman Tree Node
+//Defining AirFile Tree Node
 struct Node {
     char data;
     unsigned freq;
@@ -19,7 +19,7 @@ struct Node {
     }
 };
 
-class huffman {
+class AirFile {
     private:
         vector <Node*> arr;
 
@@ -42,7 +42,7 @@ class huffman {
         //Initializing a vector of tree nodes representing character's ascii value and initializing its frequency with 0
         void createArr();
         
-        //Traversing the constructed tree to generate huffman codes of each present character
+        //Traversing the constructed tree to generate AirFile codes of each present character
         void traverse(Node*, string);
         
         //Function to convert binary string to its equivalent decimal value
@@ -51,30 +51,30 @@ class huffman {
         //Function to convert a decimal number to its equivalent binary string
         string decToBin(int);
         
-        //Reconstructing the Huffman tree while Decoding the file
+        //Reconstructing the AirFile tree while Decoding the file
         void buildTree(char, string&);
 
         //Creating Min Heap of Nodes by frequency of characters in the input file
         void createMinHeap();
         
-        //Constructing the Huffman tree
+        //Constructing the AirFile tree
         void createTree();
         
-        //Generating Huffman codes
+        //Generating AirFile codes
         void createCodes();
         
-        //Saving Huffman Encoded File
+        //Saving AirFile Encoded File
         void saveEncodedFile();
         
         //Saving Decoded File to obtain the original File
         void saveDecodedFile();
         
-        //Reading the file to reconstruct the Huffman tree
+        //Reading the file to reconstruct the AirFile tree
         void getTree();
 
     public:
         //Constructor
-        huffman(string inFileName, string outFileName)
+        AirFile(string inFileName, string outFileName)
         {
             this->inFileName = inFileName;
             this->outFileName = outFileName;

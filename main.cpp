@@ -1,5 +1,5 @@
 #include <iostream>
-#include "huffman.hpp"
+#include "AirFile.hpp"
 using namespace std;
 
 int main()
@@ -46,7 +46,7 @@ int main()
                     }
                 }
 
-                huffman f(inputFileName, inputFileName + ".huf");
+                AirFile f(inputFileName, inputFileName + ".af");
                 f.compress();
 
                 cout << "Compressed successfully" << endl;
@@ -70,7 +70,7 @@ int main()
                         vaildFileInput = true;
                     }
                 }
-                huffman f(inputFileName + ".huf", outputFileName);
+                AirFile f(inputFileName + ".af", outputFileName);
                 f.decompress();
 
                 cout << "Decompressed successfully" << endl;
