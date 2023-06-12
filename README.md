@@ -23,6 +23,23 @@
 | ------- | -------- |
 | Average | 36.6296% |
 
+## System Details
+### CPU
+```
+Apple M2 Pro
+```
+### RAM
+```      
+Memory: 16 GB
+```
+### Disk
+```      
+Capacity: 994.66 GB (9,94,66,25,84,320 bytes)
+```
+### OS
+```
+Mac OS Sonoma 14
+````
 
 `Ashwin Narayanan S` <br />
 `A S Sreepadh` <br />
