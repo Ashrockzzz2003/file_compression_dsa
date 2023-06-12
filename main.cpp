@@ -46,7 +46,7 @@ int main()
                     }
                 }
 
-                AirFile f(inputFileName, inputFileName + ".af");
+                AirFile f(inputFileName, "compressedFiles/" + inputFileName + ".af");
                 f.compress();
 
                 cout << "Compressed successfully" << endl;
